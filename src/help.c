@@ -98,6 +98,6 @@ help ()
 	puts("\t-V, --version  Show version and compile information.\n\
 	-?, --help     Show this help.\n\
 \n\
-Find this project online at https://github.com/rhymeswithmogul/IPvMe_C/\n");
+Find this project online at https://github.com/rhymeswithmogul/IPvMe-C/\n");
 	return;
 }

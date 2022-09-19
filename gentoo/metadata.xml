@@ -9,9 +9,9 @@
 	</maintainer>
 	<stabilize-allarches/>
 	<upstream>
-		<bugs-to>https://github.com/rhymeswithmogul/IPvMe/issues</bugs-to>
-		<changelog>https://github.com/rhymeswithmogul/IPvMe/blob/e31dbcc356a2adf596b0200394ce8bbcb83b604c/CHANGELOG.md</changelog>
-		<doc>https://github.com/rhymeswithmogul/IPvMe/blob/e31dbcc356a2adf596b0200394ce8bbcb83b604c/README.md</doc>
+		<bugs-to>https://github.com/rhymeswithmogul/IPvMe-C/issues</bugs-to>
+		<changelog>https://github.com/rhymeswithmogul/IPvMe-C/blob/e31dbcc356a2adf596b0200394ce8bbcb83b604c/CHANGELOG.md</changelog>
+		<doc>https://github.com/rhymeswithmogul/IPvMe-C/blob/e31dbcc356a2adf596b0200394ce8bbcb83b604c/README.md</doc>
 		<remote-id type="github">IPvMe</remote-id>
 	</upstream>
 	<use>

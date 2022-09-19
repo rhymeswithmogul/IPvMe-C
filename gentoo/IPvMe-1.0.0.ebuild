@@ -3,8 +3,8 @@
 
 EAPI=8
 DESCRIPTION="Find your computer's WAN IP addresses."
-HOMEPAGE="https://github.com/rhymeswithmogul/${PN}"
-SRC_URI="https://github.com/rhymeswithmogul/${PN}/archive/v${PV}.tar.gz" -> "${PF}.tar.gz"
+HOMEPAGE="https://github.com/rhymeswithmogul/IPvMe-C"
+SRC_URI="https://github.com/rhymeswithmogul/IPvMe-C/archive/v${PV}.tar.gz" -> "${PF}.tar.gz"
 LICENSE="AGPL-3 AGPL-3+"
 SLOT="0"
 KEYWORDS="amd64 ~arm ~arm64 ~ppc ~ppc-macos ~ppc64 ~s390x x86"
