@@ -10,8 +10,8 @@
 	<stabilize-allarches/>
 	<upstream>
 		<bugs-to>https://github.com/rhymeswithmogul/IPvMe-C/issues</bugs-to>
-		<changelog>https://github.com/rhymeswithmogul/IPvMe-C/blob/e31dbcc356a2adf596b0200394ce8bbcb83b604c/CHANGELOG.md</changelog>
-		<doc>https://github.com/rhymeswithmogul/IPvMe-C/blob/e31dbcc356a2adf596b0200394ce8bbcb83b604c/README.md</doc>
+		<changelog>https://github.com/rhymeswithmogul/IPvMe-C/blob/main/CHANGELOG.md</changelog>
+		<doc>https://github.com/rhymeswithmogul/IPvMe-C/blob/main/README.md</doc>
 		<remote-id type="github">IPvMe</remote-id>
 	</upstream>
 	<use>
