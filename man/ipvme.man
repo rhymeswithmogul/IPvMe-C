@@ -1,0 +1,91 @@
+.\" IPvMe
+.\" Copyright (c) 2022 Colin Cogle
+.\"
+.\" This file, IPvMe.1, is part of IPvMe.
+.\" 
+.\" IPvMe is free software: you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as published
+.\" by the Free Software Foundation, either version 3 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" IPvMe is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with IPvMe. If not, see <https://www.gnu.org/licenses/>.
+.\"
+.\" (This page is best viewed with the command: groff -man)
+.\"
+.TH ipvme 1 "IPvMe" "September 19, 2022" "Version 1.0"
+.SH NAME
+ipvme \- find your Internet IP addresses
+.SH DESCRIPTION
+This app connects to a remote server on the Internet, and finds your WAN IPv4 and/or IPv6 address.
+.SH SYNOPSIS
+.PP
+.BR ipvme " \-4 " " \-6 "
+.PP
+.BR ipvme " \-? "
+.PP
+.BR ipvme " \-v "
+
+.SH OPTIONS
+.TP
+.BR \-4 ", " \-\-ipv4
+Find the computer's WAN IPv4 address.
+.TP
+.BR \-6 ", " \-\-ipv6
+Find the computer's WAN IPv6 address.
+.TP
+.BR \-V ", " \-\-version
+Show version information and exit.
+.TP
+.BR \-? ", " \-\-help
+Show detailed help and exit.
+.TP
+.SH EXAMPLES
+.PP
+To find your computer's IP addresses, simply run the app with no options.
+.nf
+.RS
+.B ipvme
+IPv4 address = 192.0.2.1
+IPv6 address = 2001:db8::1
+.RE
+.fi
+
+.SH EXIT STATUS
+.PP
+.B EXIT_SUCCESS
+No errors occurred, and zero or more IP addresses were found.
+.PP
+.B EXIT_FAILURE
+The app could not contact the remote server, or some other error occurred.
+
+.SH BUGS AND ERRATA
+.PP
+Using both the \fB\-\-ipv4\fR and \fB\-\-ipv6\fR options is the same as using neither one.
+.PP
+This app relies on the external web sites https://ip4only.me and https://ip6only.me.  Please make sure both servers are not blocked by any firewall.
+.PP
+It is possible to build this app with IPv4 and/or IPv6 support removed.  If some options are not available, please use \fB\-\-version\fR to check your compile-time options.
+
+.SH AUTHOR AND COPYRIGHT
+.BR ipvme ", version 1.0"
+.br
+Copyright (c) 2022 Colin Cogle.
+.br
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under certain conditions.
+See the
+.UR https://\:www.gnu.org/\:licenses/
+GNU Affero General Public License (version\ 3.0, or any later version)
+.UE
+for more details.
+.PP
+Bug reports and contributions should be made on this project's GitHub page:
+.UR https://\:github.com/\:rhymeswithmogul/\:IPvMe\-stdc
+.I https://\:github.com/\:rhymeswithmogul/\:IPvMe\-stdc
+.UE

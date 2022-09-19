@@ -1,0 +1,23 @@
+<?xml version="1.0" standalone="yes"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<longdescription>Find your computer's WAN IPv4 and IPv6 addresses.</longdescription>
+	<maintainer type="person">
+		<name>Colin Cogle</name>
+		<email>colin@colincogle.name</email>
+		<description>You may also open an issue on GitHub.</description>
+	</maintainer>
+	<stabilize-allarches/>
+	<upstream>
+		<bugs-to>https://github.com/rhymeswithmogul/IPvMe/issues</bugs-to>
+		<changelog>https://github.com/rhymeswithmogul/IPvMe/blob/e31dbcc356a2adf596b0200394ce8bbcb83b604c/CHANGELOG.md</changelog>
+		<doc>https://github.com/rhymeswithmogul/IPvMe/blob/e31dbcc356a2adf596b0200394ce8bbcb83b604c/README.md</doc>
+		<remote-id type="github">IPvMe</remote-id>
+	</upstream>
+	<use>
+		<flag name="ipv4">Compile this app with IPv4 support, so that it can detect IPv4 addresses.</flag>
+		<flag name="ipv6">Compile this app with IPv6 support, so that it can detect IPv6 addresses.</flag>
+		<flag name="threads">Compile this app with threading support for performance improvements.</flag>
+		<flag name="debug">Compile this app with debugging output.</flag>
+	</use>
+</pkgmetadata>
