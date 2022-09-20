@@ -18,7 +18,7 @@ with this program.  If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
  */
 
 #include <stdio.h>		/* fprintf() */
-#include <string.h>		/* strlen(), strtok() */
+#include <string.h>		/* strlen(), strcpy(), strtok() */
 #include <netdb.h>		/* struct addrinfo */
 #include <unistd.h>		/* close() */
 #include <sys/socket.h> /* send(), recv(), socket() */
@@ -53,9 +53,9 @@ main(const int argc, char* const argv[])
 		#ifndef WITHOUT_IPV6
 			{"ipv6", no_argument, 0, '6'},
 		#endif
-		{"help",    no_argument, 0, '?'},
-		{"version", no_argument, 0, 'V'},
-		{0,0,0,0}
+			{"help",    no_argument, 0, '?'},
+			{"version", no_argument, 0, 'V'},
+			{0,0,0,0}
 	};
 	while ((c = getopt_long(argc, argv, short_options, long_options, &option_index)) != -1)
 	{
@@ -168,7 +168,7 @@ findIPAddress (const char version)
 {
 	int				sockfd, error;
 	size_t			numbytes;
-	struct addrinfo	*servinfo, *j, hints;
+	struct addrinfo	*servinfo, *i, hints;
 	char			buf[BUFSIZE];
 	char			hostname[] = "ip_only.me";
 
@@ -187,10 +187,10 @@ findIPAddress (const char version)
 	}
 
 	/* In case multiple A/AAAA records are returned, attempt to connect
-		to them all in order.  (j is our iterator.) */
-	for (j = servinfo; j != NULL; j = j->ai_next)
+		to them all in order.  (i is our iterator.) */
+	for (i = servinfo; i != NULL; i = i->ai_next)
 	{
-		if ((sockfd = socket(j->ai_family, j->ai_socktype, j->ai_protocol)) == -1)
+		if ((sockfd = socket(i->ai_family, i->ai_socktype, i->ai_protocol)) == -1)
 		{
 			#ifdef DEBUG
 				perror("client: socket");
@@ -198,24 +198,24 @@ findIPAddress (const char version)
 			continue;
 		}
 
-		if (connect(sockfd, j->ai_addr, j->ai_addrlen) == -1)
+		if (connect(sockfd, i->ai_addr, i->ai_addrlen) == -1)
 		{
 			close(sockfd);
 			#ifdef DEBUG
-				perror(errorMessage);
+				perror("client: connect");
 			#endif
 			continue;
 		}
 
 		break;
 	}
-	if (j == NULL)
+	freeaddrinfo(servinfo); // all done with this structure
+	if (i == NULL)
 	{
 		sprintf(buf, "IPv%c test failed", version);
 		perror(buf);
 		return;
 	}
-	freeaddrinfo(servinfo); // all done with this structure
 
 	/* HTTP request headers */
 	sprintf(buf, "GET /api/ HTTP/1.1\r\nHost: ip%conly.me\r\nUser-Agent: %s\r\n\r\n", version, getUserAgent());
