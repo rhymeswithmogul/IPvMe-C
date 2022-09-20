@@ -23,7 +23,7 @@ with this program.  If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
 #include <unistd.h>		/* close() */
 #include <sys/socket.h> /* send(), recv(), socket() */
 #include <getopt.h>		/* getopt_long() */
-#include "ipvme.h"		/* internal functions and macros */
+#include "ipvme.h"		/* internal functions */
 #include "help.h"		/* internal functions */
 
 #ifndef WITHOUT_THREADS
@@ -168,16 +168,19 @@ findIPAddress (const char version)
 {
 	int				sockfd, error;
 	size_t			numbytes;
-	struct addrinfo	*servinfo, *j;
+	struct addrinfo	*servinfo, *j, hints;
 	char			buf[BUFSIZE];
 	char			hostname[] = "ip_only.me";
 
+	/* Select an IP version for this function. */
 	hostname[2] = version;
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = (version == '6' ? AF_INET6 : AF_INET);
 
 #ifdef DEBUG
 	printf("Connecting to %s\n", hostname);
 #endif
-	if ((error = getaddrinfo(hostname, "80", NULL, &servinfo)) != 0)
+	if ((error = getaddrinfo(hostname, "80", &hints, &servinfo)) != 0)
 	{
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(error));
 		return;
@@ -189,14 +192,18 @@ findIPAddress (const char version)
 	{
 		if ((sockfd = socket(j->ai_family, j->ai_socktype, j->ai_protocol)) == -1)
 		{
-			perror("client: socket");
+			#ifdef DEBUG
+				perror("client: socket");
+			#endif
 			continue;
 		}
 
 		if (connect(sockfd, j->ai_addr, j->ai_addrlen) == -1)
 		{
 			close(sockfd);
-			perror("client: connect");
+			#ifdef DEBUG
+				perror(errorMessage);
+			#endif
 			continue;
 		}
 
@@ -204,7 +211,8 @@ findIPAddress (const char version)
 	}
 	if (j == NULL)
 	{
-		fprintf(stderr, "client: failed to connect\n");
+		sprintf(buf, "IPv%c test failed", version);
+		perror(buf);
 		return;
 	}
 	freeaddrinfo(servinfo); // all done with this structure
