@@ -18,7 +18,7 @@ with this program.  If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
  */
 
 #include <stdio.h>		/* fprintf() */
-#include <string.h>		/* strlen(), strcpy(), strtok() */
+#include <string.h>		/* strlen(), strcpy(), strtok(), strcmp(), strcat() */
 #include <netdb.h>		/* struct addrinfo */
 #include <unistd.h>		/* close() */
 #include <sys/socket.h> /* send(), recv(), socket() */
@@ -30,6 +30,8 @@ with this program.  If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
 #include <pthread.h>	/* Threading support */
 #endif
 
+static char	retval[BUFSIZE];
+static char	retformat[5];
 
 int
 main(const int argc, char* const argv[])
@@ -42,10 +44,13 @@ main(const int argc, char* const argv[])
 		size_t		activeThreads = 0;
 	#endif
 
+	/* "Text" is the default format if not specified. */
+	strcpy(retformat, "text");
+
 	/* Getopt */
 	signed char					c;
 	int							option_index = 0;
-	const char* const			short_options = "46V?";
+	const char* const			short_options = "46f:V?";
 	static const struct option	long_options[] = {
 		#ifndef WITHOUT_IPV4
 			{"ipv4", no_argument, 0, '4'},
@@ -53,6 +58,7 @@ main(const int argc, char* const argv[])
 		#ifndef WITHOUT_IPV6
 			{"ipv6", no_argument, 0, '6'},
 		#endif
+			{"format",  required_argument, 0, 'f'},
 			{"help",    no_argument, 0, '?'},
 			{"version", no_argument, 0, 'V'},
 			{0,0,0,0}
@@ -72,6 +78,35 @@ main(const int argc, char* const argv[])
 				v6flag = 1;
 				break;
 			#endif
+
+			case 'f':
+				if (strcmp(optarg,"text") == 0)
+				{
+					strcpy(retformat,optarg);
+				}
+				
+				#ifndef WITHOUT_XML
+				else if (strcmp(optarg,"xml") == 0)
+				{
+					strcpy(retformat,optarg);
+					strcpy(retval,"<?xml version=\"1.0\" standalone=\"yes\"?>\r\n<IPAddresses>\r\n");
+				}
+				#endif
+
+				#ifndef WITHOUT_JSON
+				else if (strcmp(optarg,"json") == 0)
+				{
+					strcpy(retformat,optarg);
+					strcpy(retval,"{\r\n\tIPAddresses: [");
+				}
+				#endif
+
+				else
+				{
+					fprintf(stderr, "Unknown format \"%s\" specified!  Falling back to text.\n", optarg);
+					strcpy(retval,"text");
+				}
+				break;
 
 			case 'V':
 				version();
@@ -135,6 +170,34 @@ main(const int argc, char* const argv[])
 	}
 	#endif
 
+	/* Parse the output based on the selected return format. */
+	#ifndef WITHOUT_XML
+	if (strcmp(retformat,"xml") == 0)
+	{
+		strcat(retval,"</IPAddresses>\r\n");
+	}
+	#endif
+
+	#ifndef WITHOUT_JSON
+	if (strcmp(retformat,"json") == 0)
+	{
+		/* We have left underscores where commas should go.
+		   Replace all except the last one with a comma. */
+		size_t i = 0, lastUnderscore = 0;
+		for (; i < strlen(retval); i++)
+		{
+			if (retval[i] == '_')
+			{
+				retval[i] = ',';
+				lastUnderscore = i;
+			}
+		}
+		retval[lastUnderscore] = ' ';
+		strcat(retval,"\r\n\t]\r\n}\r\n");
+	}
+	#endif
+
+	puts(retval);
 	return 0;
 }
 
@@ -254,11 +317,27 @@ findIPAddress (const char version)
 void
 parseResponse (const char* const buffer)
 {
-	char* response  = strstr(buffer, "IPv");
-	char* IPVersion = strtok(response, ",");
+	char  appendToRetVal[BUFSIZE];
+	char* IPVersion = strtok(strstr(buffer, "IPv"), ",");
 	char* IPAddress = strtok(NULL, ",");
 
-	printf("%s address = %s\n", IPVersion, IPAddress);
+	if (strcmp(retformat,"text") == 0)
+	{
+		sprintf(appendToRetVal, "%s address = %s\n", IPVersion, IPAddress);
+	}
+#ifndef WITHOUT_XML
+	else if (strcmp(retformat,"xml") == 0)
+	{
+		sprintf(appendToRetVal, "\t<IPAddress family=\"%s\" address=\"%s\"/>\r\n", IPVersion, IPAddress);
+	}
+#endif
+#ifndef WITHOUT_JSON
+	else if (strcmp(retformat,"json") == 0)
+	{
+		sprintf(appendToRetVal, "\r\n\t\t{\r\n\t\t\tfamily: \"%s\",\r\n\t\t\taddress: \"%s\"\r\n\t\t}_", IPVersion, IPAddress);
+	}
+#endif
+	strcat(retval, appendToRetVal);
 	return;
 }
 

@@ -38,8 +38,16 @@ version ()
 	strcat(compileOptions, "-IPv6 ");
 	#endif
 
+	#ifdef WITHOUT_JSON
+	strcat(compileOptions, "-JSON ");
+	#endif
+
 	#ifdef WITHOUT_THREADS
 	strcat(compileOptions, "-threads");
+	#endif
+
+	#ifdef WITHOUT_XML
+	strcat(compileOptions, "-xml");
 	#endif
 
 	printf("%s, version %s", PACKAGE, VERSION);
@@ -64,6 +72,7 @@ void
 usage()
 {
 	char compileOptions[BUFSIZE] = " ";
+	char compileTypeOptions[BUFSIZE] = "text";
 
 	#ifndef WITHOUT_IPV4
 	strcat(compileOptions, "[-4] ");
@@ -73,7 +82,15 @@ usage()
 	strcat(compileOptions, "[-6] ");
 	#endif
 
-	printf("Usage: %s%s[-V] [-?]\n", PACKAGE, compileOptions);
+	#ifndef WITHOUT_JSON
+	strcat(compileTypeOptions, "|json");
+	#endif
+
+	#ifndef WITHOUT_XML
+	strcat(compileTypeOptions, "|xml");
+	#endif
+
+	printf("Usage: %s%s[-f %s] [-V] [-?]\n", PACKAGE, compileOptions, compileTypeOptions);
 	return;
 }
 
@@ -94,6 +111,16 @@ help ()
 #endif
 #ifndef WITHOUT_IPV6
 	puts("\t-6, --ipv6     Only get the WAN IPv6 address.");
+#endif
+	printf("\t-f, --format   Specify an output format: text");
+#ifndef WITHOUT_JSON
+	printf(", json");
+#endif
+#ifndef WITHOUT_XML
+	printf(", xml");
+#endif
+#if !defined(WITHOUT_JSON) && !defined(WITHOUT_XML)
+	puts(" (default: text)");
 #endif
 	puts("\t-V, --version  Show version and compile information.\n\
 	-?, --help     Show this help.\n\

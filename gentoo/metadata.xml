@@ -15,9 +15,11 @@
 		<remote-id type="github">IPvMe</remote-id>
 	</upstream>
 	<use>
-		<flag name="ipv4">Compile this app with IPv4 support, so that it can detect IPv4 addresses.</flag>
-		<flag name="ipv6">Compile this app with IPv6 support, so that it can detect IPv6 addresses.</flag>
-		<flag name="threads">Compile this app with threading support for performance improvements.</flag>
-		<flag name="debug">Compile this app with debugging output.</flag>
+		<flag name="debug">Compile this app with extra debugging output.</flag>
+		<flag name="ipv4">Allow IPv4 addresses to be detected.</flag>
+		<flag name="ipv6">Allow IPv6 addresses to be detected.</flag>
+		<flag name="json">Allow optional JSON output.</flag>
+		<flag name="threads">Compile with threading support for performance improvements.</flag>
+		<flag name="xml">Allow optional XML output.</flag>
 	</use>
 </pkgmetadata>

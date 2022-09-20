@@ -8,12 +8,14 @@ SRC_URI="https://github.com/rhymeswithmogul/IPvMe-C/archive/v${PV}.tar.gz" -> "$
 LICENSE="AGPL-3 AGPL-3+"
 SLOT="0"
 KEYWORDS="amd64 arm arm64 ppc ~ppc-macos ppc64 s390x x86"
-IUSE="+ipv4 +ipv6 +threads debug"
+IUSE="+ipv4 +ipv6 +json +threads +xml debug"
 
 src_configure() {
 	econf \
 		$(use_enable ipv4) \
 		$(use_enable ipv6) \
+		$(use_enable json) \
 		$(use_enable threads) \
+		$(use_enable xml) \
 		$(use_enable debug)
 }

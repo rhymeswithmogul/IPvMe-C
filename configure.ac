@@ -22,14 +22,15 @@ AC_REVISION([$Revision: 1 $])
 AM_INIT_AUTOMAKE([foreign subdir-objects -Wall -Werror])
 AC_PREREQ
 
-dnl  Check for a C99 compiler.
+dnl  Check for a C99 compiler with GNU extensions.
+dnl  In case it's needed, this code is perfectly valid C11 and C17/C18, too.
 AC_LANG([C])
 AC_PROG_CC
 AC_PROG_CC_C_O
 AC_C_CONST
 AC_REQUIRE_CPP
-AM_CFLAGS="-std=gnu17"
-dnl ^^ we'll set that variable as we go.
+AM_CFLAGS="-std=gnu99"
+dnl ^^ we'll append to that variable as we go.
 
 dnl  Check for install.
 AC_PROG_INSTALL
@@ -42,10 +43,12 @@ AC_CHECK_HEADER([stdio.h], [], AC_MSG_ERROR([stdio.h is required to build this p
 AC_CHECK_FUNC([fprintf],   [], AC_MSG_ERROR([fprintf() is required to build this package but was not found in stdio.h.]))
 AC_CHECK_FUNC([printf],    [], AC_MSG_ERROR([printf() is required to build this package but was not found in stdio.h.]))
 AC_CHECK_FUNC([puts],      [], AC_MSG_ERROR([puts() is required to build this package but was not found in stdio.h.]))
+AC_CHECK_FUNC([sprintf],   [], AC_MSG_ERROR([sprintf() is required to build this package but was not found in stdio.h.]))
 
 dnl  Check for string functions.
 AC_CHECK_HEADER([string.h], [], AC_MSG_ERROR([string.h is required to build this package.]))
 AC_CHECK_FUNC([strcat],     [], AC_MSG_ERROR([strcat() is required to build this package but was not found in string.h.]))
+AC_CHECK_FUNC([strcmp],     [], AC_MSG_ERROR([strcpy() is required to build this package but was not found in string.h.]))
 AC_CHECK_FUNC([strcpy],     [], AC_MSG_ERROR([strcpy() is required to build this package but was not found in string.h.]))
 AC_CHECK_FUNC([strlen],     [], AC_MSG_ERROR([strlen() is required to build this package but was not found in string.h.]))
 AC_CHECK_FUNC([strtok],     [], AC_MSG_ERROR([strtok() is required to build this package but was not found in string.h.]))
@@ -100,6 +103,24 @@ AS_IF([test "$enable_ipv6" = "no"], [
     AC_DEFINE([WITHOUT_IPV6], [1], [Disable IPv6 support])
 ])
 
+AC_ARG_ENABLE([json], 
+    [AS_HELP_STRING([--disable-ipv6], [disable JSON output option])],
+    [enable_json="no"],
+    [enable_json="yes"]
+)
+AS_IF([test "$enable_json" = "no"], [
+    AC_DEFINE([WITHOUT_JSON], [1], [Disable JSON output option])
+])
+
+AC_ARG_ENABLE([xml], 
+    [AS_HELP_STRING([--disable-xml], [disable XML output option])],
+    [enable_xml="no"],
+    [enable_xml="yes"]
+)
+AS_IF([test "$enable_xml" = "no"], [
+    AC_DEFINE([WITHOUT_XML], [1], [Disable XML output option])
+])
+
 AC_ARG_ENABLE([debug], 
     [AS_HELP_STRING([--enable-debug], [build with added debugging output])],
     [enable_debug="yes"],
@@ -121,6 +142,8 @@ Run make to build this app.
 OPTIONS:
   IPv4 support:     $enable_ipv4
   IPv6 support:     $enable_ipv6
+  JSON support:     $enable_json
+  XML support:      $enable_xml
   Multi-threaded:   $enable_threads
   Debugging output: $enable_debug
 ###########################
