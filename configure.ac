@@ -17,65 +17,53 @@ dnl
 dnl  You should have received a copy of the GNU Affero General Public License
 dnl  along with this program. If not, see <http://gnu.org/licenses/agpl-3.0.html>.
 
-AC_INIT([IPvMe], [1.0.0], [colin@colincogle.name])
+AC_INIT([IPvMe], [1.0.0], [colin@colincogle.name], [ipvme], [https://github.com/rhymeswithmogul/IPvMe-C])
+AC_REVISION([$Revision: 1 $])
 AM_INIT_AUTOMAKE([foreign subdir-objects -Wall -Werror])
 AC_PREREQ
-AC_PROG_INSTALL
 
 dnl  Check for a C99 compiler.
 AC_LANG([C])
 AC_PROG_CC
 AC_PROG_CC_C_O
 AC_C_CONST
-AC_C_RESTRICT
 AC_REQUIRE_CPP
+AM_CFLAGS="-std=gnu17"
+dnl ^^ we'll set that variable as we go.
 
 dnl  Check for install.
 AC_PROG_INSTALL
 
 dnl  Define types
 AC_TYPE_SIZE_T
-AC_TYPE_UINT16_T
-
-dnl  C compiler flags:
-dnl    -std=gnu17    Compile C17 with GNU extensions.  (This code can be converted to C99.)
-dnl    -Wall         Complain heavily.
-dnl    -Wextra       Complain very heavily.
-dnl    -Werror       Make all warnings errors.
-dnl    -O2           Optimize (unless we're debugging)
-AM_CFLAGS="-std=gnu17 -Wall -Wextra -Werror -O2"
-AM_LDFLAGS=""
-AC_SUBST([AM_CFLAGS])
-AC_SUBST([AM_LDFLAGS])
-
 
 dnl  Check for the standard I/O functions
-AC_CHECK_HEADER(stdio.h,  [], AC_MSG_ERROR([stdio.h is required to build this package.]))
-AC_CHECK_FUNC([printf],   [], AC_MSG_ERROR([printf() is required to build this package but was not found in stdio.h.]))
-AC_CHECK_FUNC([puts],     [], AC_MSG_ERROR([puts() is required to build this package but was not found in stdio.h.]))
-AC_CHECK_FUNC([fprintf],  [], AC_MSG_ERROR([fprintf() is required to build this package but was not found in stdio.h.]))
+AC_CHECK_HEADER([stdio.h], [], AC_MSG_ERROR([stdio.h is required to build this package.]))
+AC_CHECK_FUNC([fprintf],   [], AC_MSG_ERROR([fprintf() is required to build this package but was not found in stdio.h.]))
+AC_CHECK_FUNC([printf],    [], AC_MSG_ERROR([printf() is required to build this package but was not found in stdio.h.]))
+AC_CHECK_FUNC([puts],      [], AC_MSG_ERROR([puts() is required to build this package but was not found in stdio.h.]))
 
 dnl  Check for string functions.
-AC_CHECK_HEADER(string.h, [], AC_MSG_ERROR([string.h is required to build this package.]))
-AC_CHECK_FUNC([strcat],   [], AC_MSG_ERROR([strcat() is required to build this package but was not found in string.h.]))
-AC_CHECK_FUNC([strlen],   [], AC_MSG_ERROR([strlen() is required to build this package but was not found in string.h.]))
-AC_CHECK_FUNC([strcpy],   [], AC_MSG_ERROR([strcpy() is required to build this package but was not found in string.h.]))
-AC_CHECK_FUNC([strtok],   [], AC_MSG_ERROR([strtok() is required to build this package but was not found in string.h.]))
+AC_CHECK_HEADER([string.h], [], AC_MSG_ERROR([string.h is required to build this package.]))
+AC_CHECK_FUNC([strcat],     [], AC_MSG_ERROR([strcat() is required to build this package but was not found in string.h.]))
+AC_CHECK_FUNC([strcpy],     [], AC_MSG_ERROR([strcpy() is required to build this package but was not found in string.h.]))
+AC_CHECK_FUNC([strlen],     [], AC_MSG_ERROR([strlen() is required to build this package but was not found in string.h.]))
+AC_CHECK_FUNC([strtok],     [], AC_MSG_ERROR([strtok() is required to build this package but was not found in string.h.]))
 
 dnl  Check for close().
-AC_CHECK_HEADER(unistd.h, [], AC_MSG_ERROR([unistd.h is required to build this package.]))
-AC_CHECK_FUNC([close],    [], AC_MSG_ERROR([close() is required to build this package but was not found in unistd.h.]))
+AC_CHECK_HEADER([unistd.h], [], AC_MSG_ERROR([unistd.h is required to build this package.]))
+AC_CHECK_FUNC([close],      [], AC_MSG_ERROR([close() is required to build this package but was not found in unistd.h.]))
 
 dnl  Check for getopt.
-AC_CHECK_HEADER(getopt.h,    [], AC_MSG_ERROR([getopt.h is required to build this package.]))
+AC_CHECK_HEADER([getopt.h],  [], AC_MSG_ERROR([getopt.h is required to build this package.]))
 AC_CHECK_FUNC([getopt_long], [], AC_MSG_ERROR([getopt_long() is required to build this package but was not found in getopt.h.]))
 
 dnl  Check for socket functions.
-AC_CHECK_HEADER(netdb.h,      [], AC_MSG_ERROR([netdb.h is required to build this package.]))
-AC_CHECK_HEADER(sys/socket.h, [], AC_MSG_ERROR([socket.h is required to build this package.]))
-AC_CHECK_FUNC([send],         [], AC_MSG_ERROR([send() is required to build this package but was not found in sys/socket.h.]))
-AC_CHECK_FUNC([recv],         [], AC_MSG_ERROR([recv() is required to build this package but was not found in sys/socket.h.]))
-AC_CHECK_FUNC([socket],       [], AC_MSG_ERROR([socket() is required to build this package but was not found in sys/socket.h.]))
+AC_CHECK_HEADER([netdb.h],      [], AC_MSG_ERROR([netdb.h is required to build this package.]))
+AC_CHECK_HEADER([sys/socket.h], [], AC_MSG_ERROR([socket.h is required to build this package.]))
+AC_CHECK_FUNC([recv],           [], AC_MSG_ERROR([recv() is required to build this package but was not found in sys/socket.h.]))
+AC_CHECK_FUNC([send],           [], AC_MSG_ERROR([send() is required to build this package but was not found in sys/socket.h.]))
+AC_CHECK_FUNC([socket],         [], AC_MSG_ERROR([socket() is required to build this package but was not found in sys/socket.h.]))
 
 dnl  Check to see if we can compile this with threading support, unless the user
 dnl  asked us not to.  If --disable-threads was *not* specified and we cannot
@@ -86,15 +74,12 @@ AC_ARG_ENABLE([threads],
     [enable_threads="yes"]
 )
 AS_IF([test "$enable_threads" = "no"], [
-    AC_DEFINE([WITHOUT_THREADS], [0], [Disable threads])
+    AC_DEFINE([WITHOUT_THREADS], [1], [Disable threads])
 ],[
-    AC_CHECK_HEADERS(
-        [pthread.h],
-        [],
-        AC_MSG_ERROR([Cannot compile with threading support because <pthread.h> is missing.])
-    )
-    AC_CHECK_FUNC([pthread_create], [], AC_MSG_ERROR([pthread_create() is required to build this package but was not found in pthread.h.]))
-    AC_CHECK_FUNC([pthread_join],   [], AC_MSG_ERROR([pthread_join() is required to build this package but was not found in pthread.h.]))
+    AC_CHECK_HEADER([pthread.h],    [], AC_MSG_ERROR([Cannot compile with threading support because <pthread.h> is missing.]))
+    AC_SEARCH_LIBS([pthread_create], [pthread], [], AC_MSG_ERROR([pthread_create is required to build this package without --disable-threads.]))
+    AC_SEARCH_LIBS([pthread_join],   [pthread], [], AC_MSG_ERROR([pthread_join is required to build this package without --disable-threads.]))
+    AM_CFLAGS="${AM_CFLAGS} -pthread"
 ])
 
 AC_ARG_ENABLE([ipv4], 
@@ -122,11 +107,11 @@ AC_ARG_ENABLE([debug],
 )
 AS_IF([test "$enable_debug" = "yes"], [
     AC_DEFINE([DEBUG], 1, [Build with symbols and debugging output.])
-    CFLAGS="$CFLAGS -O0 -g3"
+    AM_CFLAGS="${AM_CFLAGS} -O0 -g3"
 ])
 
 dnl  Done!
-AC_SUBST(CFLAGS)
+AC_SUBST([AM_CFLAGS])
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 AC_MSG_RESULT([

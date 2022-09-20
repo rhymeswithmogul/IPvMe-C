@@ -17,7 +17,8 @@
 # You should have received a copy of the GNU Affero General Public License along
 # with this program.  If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
 
-AUTOMAKE_OPTIONS = foreign
-bin_PROGRAMS = IPvMe
-IPvMe_SOURCES = src/ipvme.c src/help.c
-man1_MANS = man/IPvMe.man
+AUTOMAKE_OPTIONS = foreign -Woverride
+bin_PROGRAMS = ipvme
+dist_noinst_SCRIPTS = autogen.sh
+ipvme_SOURCES = src/ipvme.c src/help.c
+man1_MANS = man/ipvme.man

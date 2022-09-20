@@ -23,7 +23,7 @@ with this program.  If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
 #include <unistd.h>		/* close() */
 #include <sys/socket.h> /* send(), recv(), socket() */
 #include <getopt.h>		/* getopt_long() */
-#include "ipvme.h"		/* internal functions */
+#include "ipvme.h"		/* internal functions and macros */
 #include "help.h"		/* internal functions */
 
 #ifndef WITHOUT_THREADS

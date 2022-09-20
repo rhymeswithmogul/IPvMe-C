@@ -103,5 +103,14 @@ parseResponse (const char* const buffer);
 char*
 getUserAgent ();
 
+/* The PACKAGE and VERSION macros should be created by autogen.sh.  If either
+   one does not exist for some reason, create it here.  (This will also make
+   your IDE happy.) */
+#ifndef PACKAGE
+#define PACKAGE "IPvMe"
+#endif
+
+#ifndef VERSION
 #define VERSION "1.0.0"
+#endif
 #endif /* _ipvme_h */
