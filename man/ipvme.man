@@ -39,6 +39,9 @@ Find the computer's WAN IPv4 address.
 .BR \-6 ", " \-\-ipv6
 Find the computer's WAN IPv6 address.
 .TP
+.BR \-f ", " \-\-format " [" " text " | " json " | " xml " ]
+Change the output type.  If not specified, \fBtext\fR is the default option.
+.TP
 .BR \-V ", " \-\-version
 Show version information and exit.
 .TP
@@ -70,7 +73,7 @@ Using both the \fB\-\-ipv4\fR and \fB\-\-ipv6\fR options is the same as using ne
 .PP
 This app relies on the external web sites https://ip4only.me and https://ip6only.me.  Please make sure both servers are not blocked by any firewall.
 .PP
-It is possible to build this app with IPv4 and/or IPv6 support removed.  If some options are not available, please use \fB\-\-version\fR to check your compile-time options.
+It is possible to build this app with IPv4, IPv6, JSON, and XML support removed.  If some options are not available, please use \fB\-\-version\fR to check your compile-time options.
 
 .SH AUTHOR AND COPYRIGHT
 .BR ipvme ", version 1.0"
