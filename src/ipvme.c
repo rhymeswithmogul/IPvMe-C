@@ -97,7 +97,7 @@ main(const int argc, char* const argv[])
 				else if (strcmp(optarg,"json") == 0)
 				{
 					strcpy(retformat,optarg);
-					strcpy(retval,"{\r\n\tIPAddresses: [");
+					strcpy(retval,"{\r\n\t\"IPAddresses\": [");
 				}
 				#endif
 
@@ -334,7 +334,7 @@ parseResponse (const char* const buffer)
 #ifndef WITHOUT_JSON
 	else if (strcmp(retformat,"json") == 0)
 	{
-		sprintf(appendToRetVal, "\r\n\t\t{\r\n\t\t\tfamily: \"%s\",\r\n\t\t\taddress: \"%s\"\r\n\t\t}_", IPVersion, IPAddress);
+		sprintf(appendToRetVal, "\r\n\t\t{\r\n\t\t\t\"family\": \"%s\",\r\n\t\t\t\"address\": \"%s\"\r\n\t\t}_", IPVersion, IPAddress);
 	}
 #endif
 	strcat(retval, appendToRetVal);
