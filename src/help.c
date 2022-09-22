@@ -25,7 +25,7 @@ with this program.  If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
 void
 version ()
 {
-	char compileOptions[BUFSIZE] = "";
+	char compileOptions[BUFSIZE] = {0};
 	#ifdef DEBUG
 	strcat(compileOptions, "+debug ");
 	#endif

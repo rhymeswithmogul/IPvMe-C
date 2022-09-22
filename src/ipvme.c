@@ -30,7 +30,7 @@ with this program.  If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
 #include <pthread.h>	/* Threading support */
 #endif
 
-static char	retval[BUFSIZE];
+static char	retval[BUFSIZE] = {0};
 static char	retformat[5];
 
 int
@@ -232,7 +232,7 @@ findIPAddress (const char version)
 	int				sockfd, error;
 	size_t			numbytes;
 	struct addrinfo	*servinfo, *i, hints;
-	char			buf[BUFSIZE];
+	char			buf[BUFSIZE] = {0};
 	char			hostname[] = "ip_only.me";
 
 	/* Select an IP version for this function. */
@@ -317,7 +317,7 @@ findIPAddress (const char version)
 void
 parseResponse (const char* const buffer)
 {
-	char  appendToRetVal[BUFSIZE];
+	char  appendToRetVal[BUFSIZE] = {0};
 	char* IPVersion = strtok(strstr(buffer, "IPv"), ",");
 	char* IPAddress = strtok(NULL, ",");
 
