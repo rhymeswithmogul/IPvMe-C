@@ -1,5 +1,7 @@
 # IPvMe
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7d3291a65fc74870948bc9827e822d47)](https://app.codacy.com/gh/rhymeswithmogul/IPvMe-C?utm_source=github.com&utm_medium=referral&utm_content=rhymeswithmogul/IPvMe-C&utm_campaign=Badge_Grade_Settings)
+
 A simple command-line app to find your computer's WAN IP address(es), courtesy of [ip6.me](https://ip6.me).
 
 ## Help
