@@ -18,7 +18,7 @@ with this program.  If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
  */
 
 #include <stdio.h>		/* fprintf() */
-#include <string.h>		/* strlen(), strcpy(), strtok(), strcmp(), strcat() */
+#include <string.h>		/* strnlen(), strcpy(), strtok(), strcmp(), strcat() */
 #include <netdb.h>		/* struct addrinfo */
 #include <unistd.h>		/* close() */
 #include <sys/socket.h> /* send(), recv(), socket() */
@@ -184,7 +184,7 @@ main(const int argc, char* const argv[])
 		/* We have left underscores where commas should go.
 		   Replace all except the last one with a comma. */
 		size_t i = 0, lastUnderscore = 0;
-		for (; i < strlen(retval); i++)
+		for (; i < strnlen(retval, BUFSIZE-1); i++)
 		{
 			if (retval[i] == '_')
 			{
@@ -282,7 +282,7 @@ findIPAddress (const char version)
 
 	/* HTTP request headers */
 	sprintf(buf, "GET /api/ HTTP/1.1\r\nHost: ip%conly.me\r\nUser-Agent: %s\r\n\r\n", version, getUserAgent());
-	if ((numbytes = send(sockfd, buf, strlen(buf), 0)) == (size_t)(-1))
+	if ((numbytes = send(sockfd, buf, strnlen(buf, BUFSIZE-1), 0)) == (size_t)(-1))
 	{
 		perror("HTTP request");
 		return;

@@ -18,7 +18,7 @@ with this program.  If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
  */
 
 #include <stdio.h>		/* printf(), puts() */
-#include <string.h>		/* strcat(), strlen() */
+#include <string.h>		/* strcat(), strnlen() */
 #include "ipvme.h"		/* PACKAGE, VERSION, BUFSIZE */
 #include "help.h"
 
@@ -51,7 +51,7 @@ version ()
 	#endif
 
 	printf("%s, version %s", PACKAGE, VERSION);
-	if (strlen(compileOptions) > 0)
+	if (strnlen(compileOptions, BUFSIZE-1) > 0)
 	{
 		printf(" -- customized build: %s", compileOptions);
 	}
