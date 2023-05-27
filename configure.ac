@@ -1,5 +1,5 @@
 dnl  IPvMe
-dnl  Copyright (c) 2022 Colin Cogle <colin@colincogle.name>
+dnl  Copyright (c) 2022-2023 Colin Cogle <colin@colincogle.name>
 dnl
 dnl  This file, configure.ac, is part of IPvMe.
 dnl  <https://github.com/rhymeswithmogul/IPvMe>

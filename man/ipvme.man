@@ -1,5 +1,5 @@
 .\" IPvMe
-.\" Copyright (c) 2022 Colin Cogle
+.\" Copyright (c) 2022-2023 Colin Cogle
 .\"
 .\" This file, IPvMe.1, is part of IPvMe.
 .\" 
@@ -78,7 +78,7 @@ It is possible to build this app with IPv4, IPv6, JSON, and XML support removed.
 .SH AUTHOR AND COPYRIGHT
 .BR ipvme ", version 1.0"
 .br
-Copyright (c) 2022 Colin Cogle.
+Copyright (c) 2022-2023 Colin Cogle.
 .br
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.

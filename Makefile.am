@@ -1,5 +1,5 @@
 # IPvMe
-# Copyright (c) 2022 Colin Cogle <colin@colincogle.name>
+# Copyright (c) 2022-2023 Colin Cogle <colin@colincogle.name>
 #
 # This file, Makefile.am, is part of IPvMe.
 # <https://github.com/rhymeswithmogul/IPvMe>

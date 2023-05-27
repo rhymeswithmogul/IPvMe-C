@@ -1,6 +1,6 @@
 /*
  IPvMe
- Copyright (c) 2022 Colin Cogle <colin@colincogle.name>
+ Copyright (c) 2022-2023 Colin Cogle <colin@colincogle.name>
  <https://github.com/rhymeswithmogul/ipvme-stdc>
  
 This program is free software: you can redistribute it and/or modify it under
