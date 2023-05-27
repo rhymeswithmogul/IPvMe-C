@@ -55,7 +55,7 @@ version ()
 	{
 		printf(" -- customized build: %s", compileOptions);
 	}
-	puts("\nCopyright © 2022 Colin Cogle.\n\
+	puts("\nCopyright © 2022-2023 Colin Cogle.\n\
 This program comes with ABSOLUTELY NO WARRANTY. This is free software, and\n\
 you are welcome to redistribute it under certain conditions. See the GNU Affero\n\
 General Public License (version 3.0 or any later version) for more details.");

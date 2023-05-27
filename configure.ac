@@ -17,7 +17,7 @@ dnl
 dnl  You should have received a copy of the GNU Affero General Public License
 dnl  along with this program. If not, see <http://gnu.org/licenses/agpl-3.0.html>.
 
-AC_INIT([IPvMe], [1.0.0], [colin@colincogle.name], [ipvme], [https://github.com/rhymeswithmogul/IPvMe-C])
+AC_INIT([IPvMe], [1.0.1], [colin@colincogle.name], [ipvme], [https://github.com/rhymeswithmogul/IPvMe-C])
 AC_REVISION([$Revision: 1 $])
 AM_INIT_AUTOMAKE([foreign subdir-objects -Wall -Werror])
 AC_PREREQ
@@ -50,7 +50,7 @@ AC_CHECK_HEADER([string.h], [], AC_MSG_ERROR([string.h is required to build this
 AC_CHECK_FUNC([strcat],     [], AC_MSG_ERROR([strcat() is required to build this package but was not found in string.h.]))
 AC_CHECK_FUNC([strcmp],     [], AC_MSG_ERROR([strcpy() is required to build this package but was not found in string.h.]))
 AC_CHECK_FUNC([strcpy],     [], AC_MSG_ERROR([strcpy() is required to build this package but was not found in string.h.]))
-AC_CHECK_FUNC([strlen],     [], AC_MSG_ERROR([strlen() is required to build this package but was not found in string.h.]))
+AC_CHECK_FUNC([strnlen],    [], AC_MSG_ERROR([strnlen() is required to build this package but was not found in string.h.]))
 AC_CHECK_FUNC([strtok],     [], AC_MSG_ERROR([strtok() is required to build this package but was not found in string.h.]))
 
 dnl  Check for close().

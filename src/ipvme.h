@@ -111,6 +111,6 @@ getUserAgent ();
 #endif
 
 #ifndef VERSION
-#define VERSION "1.0.0"
+#define VERSION "1.0.1"
 #endif
 #endif /* _ipvme_h */

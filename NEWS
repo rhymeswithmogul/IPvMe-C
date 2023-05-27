@@ -1,12 +1,11 @@
 # IPvMe news
 
-This file details all of the user-facing changes that are in versions 1.6 of
-IPvMe. For more details, please consult the CHANGELOG file or
-this project's GitHub page.
+This file details all of the user-facing changes that are in versions
+of IPvMe. For more details, please consult the CHANGELOG file or this
+project's GitHub page.
 
-## CUSTOM COMMENTS
-
-Custom comments can now be included with the `--comment` option.
+Version 1.0.1 is a bugfix release and should function identically to
+version 1.0.0.
 
 -----
 For information about older versions, consult the CHANGELOG.md files.
